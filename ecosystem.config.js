@@ -3,6 +3,7 @@ module.exports = {
     {
       name: 'alphabyte-brain-server',
       script: './brain-server/server.js',
+      exec_mode: 'fork',
       instances: 1,
       autorestart: true,
       watch: false,
