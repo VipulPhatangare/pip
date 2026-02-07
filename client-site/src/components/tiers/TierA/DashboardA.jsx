@@ -6,26 +6,20 @@ import { getPropertyById } from '../../../data/properties';
 
 export default function DashboardA() {
   const navigate = useNavigate();
-  const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+  const currentUser = { name: 'Demo User', email: 'demo@test.com' }; // Always logged in
   const [bookings, setBookings] = useState([]);
   const [inquiries, setInquiries] = useState([]);
   const [activeTab, setActiveTab] = useState('bookings');
 
   useEffect(() => {
-    if (!currentUser) {
-      navigate('/login');
-      return;
-    }
-
     const storedBookings = JSON.parse(localStorage.getItem('bookings') || '[]');
     const storedInquiries = JSON.parse(localStorage.getItem('inquiries') || '[]');
     setBookings(storedBookings);
     setInquiries(storedInquiries);
-  }, [currentUser, navigate]);
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    navigate('/login');
+    // No logout in public mode
   };
 
   const stats = [

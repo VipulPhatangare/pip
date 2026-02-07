@@ -4,33 +4,22 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function DashboardD() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const user = { name: 'Demo User', email: 'demo@test.com' }; // Always logged in
   const [bookings, setBookings] = useState([]);
   const [inquiries, setInquiries] = useState([]);
 
   useEffect(() => {
-    // Get current user
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-    if (!currentUser) {
-      navigate('/login');
-      return;
-    }
-    setUser(currentUser);
-
     // Get bookings and inquiries
     const allBookings = JSON.parse(localStorage.getItem('bookings') || '[]');
     setBookings(allBookings);
 
     const allInquiries = JSON.parse(localStorage.getItem('inquiries') || '[]');
     setInquiries(allInquiries);
-  }, [navigate]);
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    navigate('/');
+    // No logout in public mode
   };
-
-  if (!user) return null;
 
   return (
     <div style={{ 

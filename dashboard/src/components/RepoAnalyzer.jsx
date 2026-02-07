@@ -26,7 +26,7 @@ const RepoAnalyzer = () => {
     setAnalysis(null);
 
     try {
-      const response = await fetch('https://synthomind.cloud/webhook-test/pip-repo', {
+      const response = await fetch('https://synthomind.cloud/webhook/pip-repo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

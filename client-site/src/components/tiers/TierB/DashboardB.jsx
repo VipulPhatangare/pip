@@ -4,27 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function DashboardB() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+  const user = { name: 'Demo User', email: 'demo@test.com' }; // Always logged in
   const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
   const inquiries = JSON.parse(localStorage.getItem('inquiries') || '[]');
   
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    navigate('/login');
+    // No logout in public mode
   };
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center animate-fade-in">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Please log in</h2>
-          <Link to="/login">
-            <button className="px-6 py-2 rounded-lg bg-purple-600 text-white hover:scale-105 transition-transform">Go to Login</button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50">

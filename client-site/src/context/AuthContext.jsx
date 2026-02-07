@@ -1,5 +1,5 @@
 // Auth Context - NO AUTHENTICATION (Public Access Mode)
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 
 const AuthContext = createContext(null);
@@ -9,13 +9,13 @@ const BRAIN_SERVER_URL = import.meta.env.VITE_BRAIN_SERVER_URL || 'http://localh
 export const AuthProvider = ({ children }) => {
   // Always logged in as demo user (no authentication required)
   const [user] = useState({
-    id: 'public-user',
-    name: 'Guest User',
-    email: 'guest@alphabyte.com',
+    id: 'demo-user',
+    name: 'Demo User',
+    email: 'demo@test.com',
     phone: '+1-555-0000',
     role: 'user'
   });
-  const [token] = useState('public-access-token');
+  const [token] = useState('demo-access-token');
   const [loading] = useState(false);
 
   // Axios instance (no auth header needed)
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    // Do nothing
+    // Do nothing - no logout in public mode
   };
 
   const value = {

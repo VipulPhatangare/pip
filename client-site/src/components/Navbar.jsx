@@ -12,8 +12,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    logout();
-    navigate('/login');
+    // No logout action needed - public access mode
     setMobileMenuOpen(false);
   };
 
@@ -105,33 +104,15 @@ export default function Navbar() {
             
             {/* Desktop Navigation */}
             <nav style={{ display: 'none', gap: '5px', alignItems: 'center' }} className="md:flex">
-              {navLinks.map(link => {
-                if (link.protected && !isAuthenticated) return null;
-                if (link.public || isAuthenticated) {
-                  return (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      style={isActive(link.path) ? styles.activeLink : styles.link}
-                    >
-                      {link.label}
-                    </Link>
-                  );
-                }
-                return null;
-              })}
-              
-              {isAuthenticated ? (
-                <>
-                  <span style={styles.userInfo}> | {user?.name}</span>
-                  <button onClick={handleLogout} style={styles.button}>Logout</button>
-                </>
-              ) : (
-                <>
-                  <Link to="/login" style={styles.link}>Login</Link>
-                  <Link to="/signup" style={styles.link}>Signup</Link>
-                </>
-              )}
+              {navLinks.map(link => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  style={isActive(link.path) ? styles.activeLink : styles.link}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </nav>
           </div>
           
@@ -145,44 +126,21 @@ export default function Navbar() {
               paddingTop: '15px',
               borderTop: '1px solid #ddd'
             }} className="md:hidden">
-              {navLinks.map(link => {
-                if (link.protected && !isAuthenticated) return null;
-                if (link.public || isAuthenticated) {
-                  return (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      style={{
-                        ...styles.link,
-                        ...(isActive(link.path) ? styles.activeLink : {}),
-                        display: 'block',
-                        padding: '10px 15px'
-                      }}
-                    >
-                      {link.label}
-                    </Link>
-                  );
-                }
-                return null;
-              })}
-              
-              {isAuthenticated ? (
-                <>
-                  <span style={{ ...styles.userInfo, padding: '10px 15px' }}>Welcome, {user?.name}</span>
-                  <button 
-                    onClick={handleLogout} 
-                    style={{ ...styles.button, width: '100%', padding: '10px 15px' }}
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link to="/login" onClick={() => setMobileMenuOpen(false)} style={{ ...styles.link, padding: '10px 15px' }}>Login</Link>
-                  <Link to="/signup" onClick={() => setMobileMenuOpen(false)} style={{ ...styles.link, padding: '10px 15px' }}>Signup</Link>
-                </>
-              )}
+              {navLinks.map(link => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    ...styles.link,
+                    ...(isActive(link.path) ? styles.activeLink : {}),
+                    display: 'block',
+                    padding: '10px 15px'
+                  }}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </nav>
           )}
         </div>
@@ -202,40 +160,15 @@ export default function Navbar() {
 
           {/* Navigation Links - Desktop */}
           <div className="hidden lg:flex items-center space-x-2 xl:space-x-4">
-            {navLinks.map(link => {
-              if (link.protected && !isAuthenticated) return null;
-              if (link.public || isAuthenticated) {
-                return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`${styles.link} ${isActive(link.path) ? styles.activeLink : ''}`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              }
-              return null;
-            })}
-
-            {/* Auth Section */}
-            {isAuthenticated ? (
-              <div className="flex items-center space-x-2 xl:space-x-4">
-                <span className={`${styles.userInfo} hidden xl:inline text-sm`}>Welcome, {user?.name}</span>
-                <button onClick={handleLogout} className={`${styles.button} btn-touch text-sm sm:text-base`}>
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Link to="/login" className={`${styles.link} text-sm sm:text-base`}>
-                  Login
-                </Link>
-                <Link to="/signup" className={`${styles.button} btn-touch text-sm sm:text-base`}>
-                  Sign Up
-                </Link>
-              </div>
-            )}
+            {navLinks.map(link => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`${styles.link} ${isActive(link.path) ? styles.activeLink : ''}`}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           {/* Mobile Menu Button */}
@@ -262,40 +195,16 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="lg:hidden pb-4 border-t border-white/10 mt-2 pt-4">
             <div className="flex flex-col space-y-2">
-              {navLinks.map(link => {
-                if (link.protected && !isAuthenticated) return null;
-                if (link.public || isAuthenticated) {
-                  return (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`${styles.link} ${isActive(link.path) ? styles.activeLink : ''} btn-touch block`}
-                    >
-                      {link.label}
-                    </Link>
-                  );
-                }
-                return null;
-              })}
-
-              {isAuthenticated ? (
-                <>
-                  <span className={`${styles.userInfo} py-2 px-3 text-sm`}>Welcome, {user?.name}</span>
-                  <button onClick={handleLogout} className={`${styles.button} w-full btn-touch`}>
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link to="/login" onClick={() => setMobileMenuOpen(false)} className={`${styles.link} btn-touch block`}>
-                    Login
-                  </Link>
-                  <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className={`${styles.button} text-center btn-touch block`}>
-                    Sign Up
-                  </Link>
-                </>
-              )}
+              {navLinks.map(link => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`${styles.link} ${isActive(link.path) ? styles.activeLink : ''} btn-touch block`}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
         )}
