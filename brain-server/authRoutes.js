@@ -217,11 +217,32 @@ router.post('/login', async (req, res) => {
  */
 router.get('/verify', verifyToken, async (req, res) => {
   try {
-    // Find user from decoded token
+    // Handle static/demo users
+    if (req.user.id && req.user.id.toString().startsWith('static-')) {
+      console.log('✅ Token verified for static user:', req.user.email);
+      return res.json({
+        success: true,
+        user: {
+          id: req.user.id,
+          name: req.user.name,
+          email: req.user.email,
+          phone: '+1-555-0000',
+          role: 'user',
+          preferences: {
+            alwaysOptimize: false,
+            neverOptimize: false,
+            preferredTier: null
+          },
+          createdAt: new Date().toISOString()
+        }
+      });
+    }
+
+    // Find user from decoded token (MongoDB)
     const user = await User.findById(req.user.id);
     
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ success: false, error: 'User not found' });
     }
 
     // Return user without password
@@ -233,7 +254,7 @@ router.get('/verify', verifyToken, async (req, res) => {
     });
   } catch (error) {
     console.error('Verify error:', error);
-    res.status(500).json({ error: 'Internal server error', message: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error', message: error.message });
   }
 });
 
@@ -242,17 +263,38 @@ router.get('/verify', verifyToken, async (req, res) => {
  */
 router.get('/me', verifyToken, async (req, res) => {
   try {
+    // Handle static/demo users
+    if (req.user.id && req.user.id.toString().startsWith('static-')) {
+      console.log('✅ Get user info for static user:', req.user.email);
+      return res.json({
+        success: true,
+        user: {
+          id: req.user.id,
+          name: req.user.name,
+          email: req.user.email,
+          phone: '+1-555-0000',
+          role: 'user',
+          preferences: {
+            alwaysOptimize: false,
+            neverOptimize: false,
+            preferredTier: null
+          },
+          createdAt: new Date().toISOString()
+        }
+      });
+    }
+
     const user = await User.findById(req.user.id);
     
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ success: false, error: 'User not found' });
     }
 
     const userWithoutPassword = user.getPublicProfile();
     res.json({ success: true, user: userWithoutPassword });
   } catch (error) {
     console.error('Get user error:', error);
-    res.status(500).json({ error: 'Internal server error', message: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error', message: error.message });
   }
 });
 
