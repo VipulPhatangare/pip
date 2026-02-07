@@ -2,7 +2,8 @@
 import { io } from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 
-const BRAIN_SERVER_URL = import.meta.env.VITE_BRAIN_SERVER_URL || 'http://localhost:3001';
+// Use separate WebSocket URL (without /api path) for Socket.IO connection
+const WS_URL = import.meta.env.VITE_WS_URL || 'http://localhost:3001';
 
 export class BrainClient {
   constructor() {
@@ -33,9 +34,9 @@ export class BrainClient {
       return;
     }
 
-    console.log('Connecting to brain server:', BRAIN_SERVER_URL);
+    console.log('Connecting to brain server:', WS_URL);
 
-    this.socket = io(BRAIN_SERVER_URL, {
+    this.socket = io(WS_URL, {
       transports: ['websocket', 'polling'],
       reconnection: true,
       reconnectionDelay: 1000,
