@@ -50,9 +50,9 @@ const io = new Server(httpServer, {
 });
 
 // Middleware - CORS
-log.info(`CORS allowed origins: ${corsOrigins.join(', ')}`);
+console.log(`✅ CORS allowed origins: ${corsOrigins.join(', ')}`);
 
-// Manual CORS headers (backup)
+// Manual CORS headers
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (origin && corsOrigins.includes(origin)) {
@@ -67,11 +67,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors({
-  origin: corsOrigins,
-  credentials: true,
-  optionsSuccessStatus: 200
-}));
+// Commented out - using manual CORS headers instead to avoid conflicts
+// app.use(cors({
+//   origin: corsOrigins,
+//   credentials: true,
+//   optionsSuccessStatus: 200
+// }));
 
 app.use(express.json());
 
