@@ -1,4 +1,4 @@
-// Auth Context - JWT Authentication Management
+// Auth Context - NO AUTHENTICATION (Public Access Mode)
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -7,121 +7,40 @@ const AuthContext = createContext(null);
 const BRAIN_SERVER_URL = import.meta.env.VITE_BRAIN_SERVER_URL || 'http://localhost:3001';
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('authToken'));
-  const [loading, setLoading] = useState(true);
+  // Always logged in as demo user (no authentication required)
+  const [user] = useState({
+    id: 'public-user',
+    name: 'Guest User',
+    email: 'guest@alphabyte.com',
+    phone: '+1-555-0000',
+    role: 'user'
+  });
+  const [token] = useState('public-access-token');
+  const [loading] = useState(false);
 
-  // Axios instance with auth header
+  // Axios instance (no auth header needed)
   const axiosInstance = axios.create({
     baseURL: BRAIN_SERVER_URL
   });
 
-  // Add token to requests
-  axiosInstance.interceptors.request.use((config) => {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      config.headers.Authorization = `Bearer ${authToken}`;
-    }
-    return config;
-  });
-
-  // Verify token on mount
-  useEffect(() => {
-    const verifyToken = async () => {
-      const storedToken = localStorage.getItem('authToken');
-      
-      if (!storedToken) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await axios.get(`${BRAIN_SERVER_URL}/auth/verify`, {
-          headers: { Authorization: `Bearer ${storedToken}` }
-        });
-
-        if (response.data.success) {
-          setUser(response.data.user);
-          setToken(storedToken);
-        } else {
-          // Invalid token, clear it
-          localStorage.removeItem('authToken');
-          setToken(null);
-        }
-      } catch (error) {
-        console.error('Token verification failed:', error);
-        localStorage.removeItem('authToken');
-        setToken(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    verifyToken();
-  }, []);
-
-  // Login function
+  // No-op functions (authentication disabled)
   const login = async (email, password) => {
-    try {
-      const response = await axios.post(`${BRAIN_SERVER_URL}/auth/login`, {
-        email,
-        password
-      });
-
-      if (response.data.success) {
-        const { token, user } = response.data;
-        localStorage.setItem('authToken', token);
-        setToken(token);
-        setUser(user);
-        return { success: true };
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      return {
-        success: false,
-        error: error.response?.data?.error || 'Login failed'
-      };
-    }
+    return { success: true };
   };
 
-  // Signup function
   const signup = async (name, email, phone, password) => {
-    try {
-      const response = await axios.post(`${BRAIN_SERVER_URL}/auth/signup`, {
-        name,
-        email,
-        phone,
-        password
-      });
-
-      if (response.data.success) {
-        const { token, user } = response.data;
-        localStorage.setItem('authToken', token);
-        setToken(token);
-        setUser(user);
-        return { success: true };
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-      return {
-        success: false,
-        error: error.response?.data?.error || 'Signup failed'
-      };
-    }
+    return { success: true };
   };
 
-  // Logout function
   const logout = () => {
-    localStorage.removeItem('authToken');
-    setToken(null);
-    setUser(null);
+    // Do nothing
   };
 
   const value = {
     user,
     token,
     loading,
-    isAuthenticated: !!user,
+    isAuthenticated: true, // Always authenticated
     login,
     signup,
     logout,
