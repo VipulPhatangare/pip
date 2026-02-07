@@ -442,7 +442,7 @@ function App() {
     
     try {
       // Send consent to brain server
-      const response = await axios.post(`${BRAIN_SERVER_URL}/api/consent`, {
+      const response = await axios.post(`${BRAIN_SERVER_URL}/consent`, {
         clientId: brainClient.getClientId(),
         consent
       });
