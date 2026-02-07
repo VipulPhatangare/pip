@@ -235,6 +235,12 @@ function App() {
       }
     });
 
+    // Fallback: stop initializing after 3 seconds even if no decision received
+    const initTimeout = setTimeout(() => {
+      console.log('⏱️ Initialization timeout - using initial tier');
+      setIsInitializing(false);
+    }, 3000);
+
     // Subscribe to tier decisions from brain server
     const unsubscribeTier = brainClient.onTierDecision((decision) => {
       console.log('🧠 Received tier decision from brain server:', {
@@ -246,9 +252,8 @@ function App() {
       });
       
       // Mark initialization complete on first tier decision
-      if (isInitializing) {
-        setIsInitializing(false);
-      }
+      clearTimeout(initTimeout);
+      setIsInitializing(false);
 
       // Check if user consent is required
       if (decision.requiresConsent && !decision.emergency) {
@@ -351,6 +356,7 @@ function App() {
 
     // Cleanup
     return () => {
+      clearTimeout(initTimeout);
       environmentMonitor.stopMonitoring();
       brainClient.disconnect();
       unsubscribeMetrics();
