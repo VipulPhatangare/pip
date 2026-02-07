@@ -11,6 +11,8 @@ import SystemStats from './components/SystemStats';
 import RepoAnalyzer from './components/RepoAnalyzer';
 
 const BRAIN_SERVER_URL = import.meta.env.VITE_BRAIN_SERVER_URL || 'http://localhost:3001';
+// Use separate WebSocket URL for Socket.IO connection (without /api path)
+const WS_URL = import.meta.env.VITE_WS_URL || 'http://localhost:3001';
 
 function App() {
   const [socket, setSocket] = useState(null);
@@ -20,8 +22,8 @@ function App() {
   const [selectedClient, setSelectedClient] = useState(null);
 
   useEffect(() => {
-    // Connect to brain server
-    const newSocket = io(BRAIN_SERVER_URL, {
+    // Connect to brain server via WebSocket
+    const newSocket = io(WS_URL, {
       transports: ['websocket', 'polling']
     });
 
