@@ -17,6 +17,14 @@ import paymentRoutes from './paymentRoutes.js';
 // Load environment variables
 dotenv.config();
 
+// Silent logger for production
+const isProd = process.env.NODE_ENV === 'production';
+const log = {
+  info: (...args) => !isProd && console.log(...args),
+  error: (...args) => console.error(...args),
+  warn: (...args) => !isProd && console.warn(...args)
+};
+
 // Connect to MongoDB
 connectDatabase();
 
@@ -389,7 +397,7 @@ app.get('/api/stats', (req, res) => {
 
 // WebSocket Connection Handling
 io.on('connection', (socket) => {
-  console.log('Client connected:', socket.id);
+  log.info('Client connected:', socket.id);
 
   // Client identification
   socket.on('identify', (data) => {
@@ -397,7 +405,7 @@ io.on('connection', (socket) => {
     socket.clientId = clientId;
     socket.join(clientId); // Join room for targeted messages
     
-    console.log(`Client identified as: ${clientId}`);
+    log.info(`Client identified as: ${clientId}`);
     
     // Reset tier engine state to allow fresh decision (prevents stale tier D from previous session)
     tierEngine.resetClientState(clientId);
@@ -444,7 +452,7 @@ io.on('connection', (socket) => {
       // Only send decision if meaningful change occurred
       if (shouldSendDecision) {
         socket.emit('tierDecision', decision);
-        console.log(`Client ${clientId} [${route}]: Tier ${decision.tier} - ${decision.reason}`);
+        log.info(`Client ${clientId} [${route}]: Tier ${decision.tier} - ${decision.reason}`);
       }
 
       // Always broadcast to dashboard (but less frequently for stable conditions)
@@ -470,7 +478,7 @@ io.on('connection', (socket) => {
   // Handle disconnection
   socket.on('disconnect', () => {
     const clientId = socket.clientId || socket.id;
-    console.log('Client disconnected:', clientId);
+    log.info('Client disconnected:', clientId);
 
     // Keep client data for a while (they might reconnect)
     setTimeout(() => {
@@ -491,7 +499,7 @@ io.on('connection', (socket) => {
 // Start server
 const PORT = process.env.PORT || 3001;
 httpServer.listen(PORT, () => {
-  console.log(`
+  log.info(`
 ╔═══════════════════════════════════════════════════════╗
 ║                                                       ║
 ║   🧠 PROTEAN BRAIN SERVER                            ║
@@ -518,8 +526,8 @@ httpServer.listen(PORT, () => {
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: closing HTTP server');
+  log.info('SIGTERM signal received: closing HTTP server');
   httpServer.close(() => {
-    console.log('HTTP server closed');
+    log.info('HTTP server closed');
   });
 });
