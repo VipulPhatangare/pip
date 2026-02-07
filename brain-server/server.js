@@ -49,21 +49,30 @@ const io = new Server(httpServer, {
   pingInterval: 25000
 });
 
-// Middleware
+// Middleware - CORS
+log.info(`CORS allowed origins: ${corsOrigins.join(', ')}`);
+
+// Manual CORS headers (backup)
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && corsOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  }
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl, Postman)
-    if (!origin) return callback(null, true);
-    
-    if (corsOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      log.warn(`CORS blocked origin: ${origin}`);
-      callback(null, false);
-    }
-  },
-  credentials: true
+  origin: corsOrigins,
+  credentials: true,
+  optionsSuccessStatus: 200
 }));
+
 app.use(express.json());
 
 // API Routes
