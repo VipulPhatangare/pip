@@ -1,19 +1,34 @@
 // Tier A - Abundance Mode: Book Visit with Sequential Animations
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getPropertyById } from '../../../data/properties';
+import { useFormStore } from '../../../store/formStore';
 
 export default function BookVisitA() {
   const { id } = useParams();
   const property = getPropertyById(id);
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
+  
+  // Use formStore for persistence across tier changes
+  const { getFormData, updateField } = useFormStore();
+  const formId = `bookVisit-${id}`;
+  const savedData = getFormData(formId);
+  
+  // Initialize form data from store or defaults
   const [formData, setFormData] = useState({
-    date: '',
-    time: '',
-    message: ''
+    date: savedData.date || '',
+    time: savedData.time || '',
+    message: savedData.message || ''
   });
+  
+  // Sync formData with formStore on every change
+  useEffect(() => {
+    updateField(formId, 'date', formData.date);
+    updateField(formId, 'time', formData.time);
+    updateField(formId, 'message', formData.message);
+  }, [formData, formId, updateField]);
 
   if (!property) {
     return (

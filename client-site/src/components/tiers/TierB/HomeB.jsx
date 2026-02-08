@@ -20,33 +20,16 @@ export default function HomeB() {
             Discover premium properties across India with advanced search and virtual tours.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in delay-400 px-4">
-            {isAuthenticated ? (
-              <>  
-                <Link to="/properties" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 transform hover:-translate-y-1 btn-touch text-sm sm:text-base">
-                    Browse Properties →
-                  </button>
-                </Link>
-                <Link to="/dashboard" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl border-2 border-purple-300 text-gray-700 font-semibold hover:border-purple-500 hover:bg-purple-50 hover:scale-105 transition-all duration-300 btn-touch text-sm sm:text-base">
-                    My Dashboard
-                  </button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/signup" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 transform hover:-translate-y-1 btn-touch text-sm sm:text-base">
-                    Get Started Free →
-                  </button>
-                </Link>
-                <Link to="/login" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl border-2 border-purple-300 text-gray-700 font-semibold hover:border-purple-500 hover:bg-purple-50 hover:scale-105 transition-all duration-300 btn-touch text-sm sm:text-base">
-                    Login
-                  </button>
-                </Link>
-              </>
-            )}
+            <Link to="/properties" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 transform hover:-translate-y-1 btn-touch text-sm sm:text-base">
+                Browse Properties →
+              </button>
+            </Link>
+            <Link to="/dashboard" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl border-2 border-purple-300 text-gray-700 font-semibold hover:border-purple-500 hover:bg-purple-50 hover:scale-105 transition-all duration-300 btn-touch text-sm sm:text-base">
+                My Dashboard
+              </button>
+            </Link>
           </div>
         </div>
 

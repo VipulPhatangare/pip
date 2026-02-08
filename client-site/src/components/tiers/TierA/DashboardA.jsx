@@ -87,14 +87,6 @@ export default function DashboardA() {
               Manage your property journey
             </motion.p>
           </div>
-          <motion.button
-            onClick={handleLogout}
-            className="px-6 py-3 rounded-xl bg-red-500/20 border border-red-500/50 text-red-300 hover:bg-red-500/30 font-medium"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Logout
-          </motion.button>
         </div>
       </motion.div>
 

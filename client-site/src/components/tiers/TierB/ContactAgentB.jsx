@@ -1,20 +1,34 @@
 // Tier B - Constraint Mode: Contact Agent with CSS Animations
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getPropertyById } from '../../../data/properties';
+import { useFormStore } from '../../../store/formStore';
 
 export default function ContactAgentB() {
   const { id } = useParams();
   const navigate = useNavigate();
   const property = getPropertyById(id);
+  
+  // Use formStore for persistence across tier changes
+  const { getFormData, updateField } = useFormStore();
+  const formId = `contactAgent-${id}`;
+  const savedData = getFormData(formId);
+  
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: 'General Inquiry',
-    message: ''
+    name: savedData.name || '',
+    email: savedData.email || '',
+    phone: savedData.phone || '',
+    subject: savedData.subject || 'General Inquiry',
+    message: savedData.message || ''
   });
   const [success, setSuccess] = useState(false);
+  
+  // Sync formData with formStore on every change
+  useEffect(() => {
+    Object.keys(formData).forEach(key => {
+      updateField(formId, key, formData[key]);
+    });
+  }, [formData, formId, updateField]);
 
   if (!property) {
     return (

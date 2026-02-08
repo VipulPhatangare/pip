@@ -46,18 +46,6 @@ export default function DashboardD() {
               {user.email}
             </p>
           </div>
-          <button 
-            onClick={handleLogout}
-            style={{ 
-              padding: '8px 16px',
-              backgroundColor: '#fff',
-              border: '1px solid #000',
-              cursor: 'pointer',
-              fontSize: '12px'
-            }}
-          >
-            Logout
-          </button>
         </div>
       </div>
 

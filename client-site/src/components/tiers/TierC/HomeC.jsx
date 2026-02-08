@@ -18,33 +18,16 @@ export default function HomeC() {
             Discover premium properties across India. Simple, fast, and reliable.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-            {isAuthenticated ? (
-              <>
-                <Link to="/properties" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors shadow-lg btn-touch text-sm sm:text-base">
-                    Browse Properties →
-                  </button>
-                </Link>
-                <Link to="/dashboard" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:border-purple-500 hover:text-purple-600 transition-colors btn-touch text-sm sm:text-base">
-                    My Dashboard
-                  </button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/signup" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors shadow-lg btn-touch text-sm sm:text-base">
-                    Get Started Free →
-                  </button>
-                </Link>
-                <Link to="/login" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:border-purple-500 hover:text-purple-600 transition-colors btn-touch text-sm sm:text-base">
-                    Login
-                  </button>
-                </Link>
-              </>
-            )}
+            <Link to="/properties" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors shadow-lg btn-touch text-sm sm:text-base">
+                Browse Properties →
+              </button>
+            </Link>
+            <Link to="/dashboard" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:border-purple-500 hover:text-purple-600 transition-colors btn-touch text-sm sm:text-base">
+                My Dashboard
+              </button>
+            </Link>
           </div>
         </div>
 

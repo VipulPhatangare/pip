@@ -1,9 +1,12 @@
 // Form State Store using Zustand
-// Persists user input across tier changes
+// Persists user input across tier changes and page reloads
 
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-export const useFormStore = create((set, get) => ({
+export const useFormStore = create(
+  persist(
+    (set, get) => ({
   // Form data storage
   formData: {},
   
@@ -89,4 +92,10 @@ export const useFormStore = create((set, get) => ({
       intentHistory: state.intentHistory || []
     });
   }
-}));
+    }),
+    {
+      name: 'protean-form-storage',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

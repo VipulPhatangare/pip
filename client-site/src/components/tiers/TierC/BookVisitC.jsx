@@ -1,21 +1,35 @@
 // Tier C - Minimal Mode: Book Visit with Tailwind
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getPropertyById } from '../../../data/properties';
+import { useFormStore } from '../../../store/formStore';
 
 export default function BookVisitC() {
   const { id } = useParams();
   const navigate = useNavigate();
   const property = getPropertyById(id);
+  
+  // Use formStore for persistence across tier changes
+  const { getFormData, updateField } = useFormStore();
+  const formId = `bookVisit-${id}`;
+  const savedData = getFormData(formId);
+  
   const [formData, setFormData] = useState({
-    date: '',
-    time: '',
-    name: '',
-    phone: '',
-    email: '',
-    message: ''
+    date: savedData.date || '',
+    time: savedData.time || '',
+    name: savedData.name || '',
+    phone: savedData.phone || '',
+    email: savedData.email || '',
+    message: savedData.message || ''
   });
   const [success, setSuccess] = useState(false);
+  
+  // Sync formData with formStore on every change
+  useEffect(() => {
+    Object.keys(formData).forEach(key => {
+      updateField(formId, key, formData[key]);
+    });
+  }, [formData, formId, updateField]);
 
   if (!property) {
     return (

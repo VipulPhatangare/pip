@@ -80,7 +80,7 @@ function App() {
 
   const fetchClients = async () => {
     try {
-      const response = await axios.get(`${BRAIN_SERVER_URL}/clients`);
+      const response = await axios.get(`${BRAIN_SERVER_URL}/api/clients`);
       setClients(response.data.clients || []);
     } catch (error) {
       console.error('Error fetching clients:', error);
@@ -89,7 +89,7 @@ function App() {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get(`${BRAIN_SERVER_URL}/stats`);
+      const response = await axios.get(`${BRAIN_SERVER_URL}/api/stats`);
       setStats(response.data);
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -120,7 +120,7 @@ function App() {
 
   const handleTierOverride = async (clientId, tier) => {
     try {
-      await axios.post(`${BRAIN_SERVER_URL}/override`, { clientId, tier });
+      await axios.post(`${BRAIN_SERVER_URL}/api/override`, { clientId, tier });
       await fetchClients();
     } catch (error) {
       console.error('Error setting tier override:', error);
@@ -130,7 +130,7 @@ function App() {
 
   const handleMetricsOverride = async (clientId, metrics) => {
     try {
-      await axios.post(`${BRAIN_SERVER_URL}/metrics-override`, { clientId, metrics });
+      await axios.post(`${BRAIN_SERVER_URL}/api/metrics-override`, { clientId, metrics });
       await fetchClients();
     } catch (error) {
       console.error('Error setting metrics override:', error);

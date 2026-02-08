@@ -227,75 +227,37 @@ export default function HomeD() {
         border: '2px dashed #666',
         padding: '20px'
       }}>
-        {isAuthenticated ? (
-          <>
-            <h3 style={{ margin: '0 0 10px 0' }}>
-              Welcome Back, {user?.name}!
-            </h3>
-            <p style={{ margin: '0 0 15px 0', color: '#666' }}>
-              Continue exploring amazing properties
-            </p>
-            <Link 
-              to="/properties"
-              style={{ 
-                display: 'inline-block',
-                padding: '12px 30px',
-                backgroundColor: '#000',
-                color: '#fff',
-                textDecoration: 'none',
-                marginRight: '10px'
-              }}
-            >
-              Browse Properties
-            </Link>
-            <Link 
-              to="/dashboard"
-              style={{ 
-                display: 'inline-block',
-                padding: '12px 30px',
-                border: '2px solid #000',
-                color: '#000',
-                textDecoration: 'none'
-              }}
-            >
-              My Dashboard
-            </Link>
-          </>
-        ) : (
-          <>
-            <h3 style={{ margin: '0 0 10px 0' }}>
-              Ready to Find Your Dream Home?
-            </h3>
-            <p style={{ margin: '0 0 15px 0', color: '#666' }}>
-              Create an account to save favorites and get personalized recommendations
-            </p>
-            <Link 
-              to="/signup"
-              style={{ 
-                display: 'inline-block',
-                padding: '12px 30px',
-                backgroundColor: '#000',
-                color: '#fff',
-                textDecoration: 'none',
-                marginRight: '10px'
-              }}
-            >
-              Sign Up
-            </Link>
-            <Link 
-              to="/login"
-              style={{ 
-                display: 'inline-block',
-                padding: '12px 30px',
-                border: '2px solid #000',
-                color: '#000',
-                textDecoration: 'none'
-              }}
-            >
-              Login
-            </Link>
-          </>
-        )}
+        <h3 style={{ margin: '0 0 10px 0' }}>
+          Welcome Back!
+        </h3>
+        <p style={{ margin: '0 0 15px 0', color: '#666' }}>
+          Continue exploring amazing properties
+        </p>
+        <Link 
+          to="/properties"
+          style={{ 
+            display: 'inline-block',
+            padding: '12px 30px',
+            backgroundColor: '#000',
+            color: '#fff',
+            textDecoration: 'none',
+            marginRight: '10px'
+          }}
+        >
+          Browse Properties
+        </Link>
+        <Link 
+          to="/dashboard"
+          style={{ 
+            display: 'inline-block',
+            padding: '12px 30px',
+            border: '2px solid #000',
+            color: '#000',
+            textDecoration: 'none'
+          }}
+        >
+          My Dashboard
+        </Link>
       </div>
     </div>
   );

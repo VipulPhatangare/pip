@@ -1,23 +1,36 @@
 // Tier D - Survival Mode: Book Site Visit Form
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getPropertyById } from '../../../data/properties';
+import { useFormStore } from '../../../store/formStore';
 
 export default function BookVisitD() {
   const { id } = useParams();
   const navigate = useNavigate();
   const property = getPropertyById(id);
+  
+  // Use formStore for persistence across tier changes
+  const { getFormData, updateField } = useFormStore();
+  const formId = `bookVisit-${id}`;
+  const savedData = getFormData(formId);
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    date: '',
-    time: '',
-    message: ''
+    name: savedData.name || '',
+    email: savedData.email || '',
+    phone: savedData.phone || '',
+    date: savedData.date || '',
+    time: savedData.time || '',
+    message: savedData.message || ''
   });
 
   const [submitted, setSubmitted] = useState(false);
+  
+  // Sync formData with formStore on every change
+  useEffect(() => {
+    Object.keys(formData).forEach(key => {
+      updateField(formId, key, formData[key]);
+    });
+  }, [formData, formId, updateField]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

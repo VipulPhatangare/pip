@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getPropertyById } from '../../../data/properties';
+import { useFormStore } from '../../../store/formStore';
 
 export default function ContactAgentD() {
   const { id } = useParams();
@@ -9,30 +10,32 @@ export default function ContactAgentD() {
   const [property, setProperty] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [inquiryId, setInquiryId] = useState('');
+  
+  // Use formStore for persistence across tier changes
+  const { getFormData, updateField } = useFormStore();
+  const formId = `contactAgent-${id}`;
+  const savedData = getFormData(formId);
+  
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: 'General Inquiry',
-    message: '',
-    preferredContact: 'email'
+    name: savedData.name || '',
+    email: savedData.email || '',
+    phone: savedData.phone || '',
+    subject: savedData.subject || 'General Inquiry',
+    message: savedData.message || '',
+    preferredContact: savedData.preferredContact || 'email'
   });
+  
+  // Sync formData with formStore on every change
+  useEffect(() => {
+    Object.keys(formData).forEach(key => {
+      updateField(formId, key, formData[key]);
+    });
+  }, [formData, formId, updateField]);
 
   useEffect(() => {
     if (id) {
       const prop = getPropertyById(parseInt(id));
       setProperty(prop);
-      
-      // Pre-fill with user data if logged in
-      const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-      if (currentUser) {
-        setFormData(prev => ({
-          ...prev,
-          name: currentUser.name || '',
-          email: currentUser.email || '',
-          phone: currentUser.phone || ''
-        }));
-      }
     }
   }, [id]);
 

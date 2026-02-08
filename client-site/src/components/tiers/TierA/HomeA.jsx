@@ -104,49 +104,24 @@ export default function HomeA() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
           >
-            {isAuthenticated ? (
-              <>
-                <Link to="/properties">
-                  <motion.button
-                    whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(168, 85, 247, 0.4)" }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-base sm:text-lg font-bold shadow-xl btn-touch"
-                  >
-                    Browse Properties →
-                  </motion.button>
-                </Link>
-                <Link to="/dashboard">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full border-2 border-white/30 backdrop-blur-sm text-base sm:text-lg font-semibold hover:bg-white/10 transition-colors btn-touch"
-                  >
-                    My Dashboard
-                  </motion.button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/signup">
-                  <motion.button
-                    whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(168, 85, 247, 0.4)" }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-base sm:text-lg font-bold shadow-xl btn-touch"
-                  >
-                    Get Started Free →
-                  </motion.button>
-                </Link>
-                <Link to="/login">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full border-2 border-white/30 backdrop-blur-sm text-base sm:text-lg font-semibold hover:bg-white/10 transition-colors btn-touch"
-                  >
-                    Login
-                  </motion.button>
-                </Link>
-              </>
-            )}
+            <Link to="/properties">
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(168, 85, 247, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-base sm:text-lg font-bold shadow-xl btn-touch"
+              >
+                Browse Properties →
+              </motion.button>
+            </Link>
+            <Link to="/dashboard">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full border-2 border-white/30 backdrop-blur-sm text-base sm:text-lg font-semibold hover:bg-white/10 transition-colors btn-touch"
+              >
+                My Dashboard
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
 

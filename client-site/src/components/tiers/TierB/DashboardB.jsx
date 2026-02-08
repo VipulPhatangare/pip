@@ -30,12 +30,6 @@ export default function DashboardB() {
                   Browse Properties
                 </button>
               </Link>
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 hover:scale-105 transition-all duration-300"
-              >
-                Logout
-              </button>
             </div>
           </div>
         </div>
