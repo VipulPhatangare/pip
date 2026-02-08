@@ -6,7 +6,6 @@ import axios from 'axios';
 import ClientsList from './components/ClientsList';
 import MetricsCharts from './components/MetricsCharts';
 import TierControl from './components/TierControl';
-import MetricsControl from './components/MetricsControl';
 import SystemStats from './components/SystemStats';
 import RepoAnalyzer from './components/RepoAnalyzer';
 
@@ -196,10 +195,6 @@ function App() {
           <TierControl 
             client={selectedClient ? clients.find(c => c.clientId === selectedClient) : null}
             onTierOverride={handleTierOverride}
-          />
-          <MetricsControl 
-            client={selectedClient ? clients.find(c => c.clientId === selectedClient) : null}
-            onMetricsOverride={handleMetricsOverride}
           />
         </div>
       </div>
